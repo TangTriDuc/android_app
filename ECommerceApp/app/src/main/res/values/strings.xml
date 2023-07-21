@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">ECommerce App</string>
+    <string name="SignUp">Sign Up</string>
+    <string name="Name">Name</string>
+    <string name="Email">Email</string>
+    <string name="password">Password</string>
+    <string name="don_t_have_an_account">Don\'t Have An Count?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="already_have_an_account">Already Have An Count?</string>
+    <string name="buttonsignup">btnsignup</string>
+
+
+    //OnBoarding Screen
+    <string name="first_slide">Choose Your Products </string>
+    <string name="second_slide">Fast Delivery</string>
+    <string name="third_slide">Good Service</string>
+
+    <string name="description">Description</string>
+    <string name="let_s_get_started">Let\'s get started</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="category">Category</string>
+    <string name="see_all">See All</string>
+    <string name="new_products">New Products</string>
+    <string name="we_provide_best_products">We provide best products.</string>
+    <string name="popular_products">Popular Products</string>
+    <string name="category_name">Category Name</string>
+    <string name="catimg">catimg</string>
+    <string name="_90">90</string>
+    <string name="product_name">Product Name</string>
+    <string name="price">Price: $</string>
+    <string name="pic_all">pic_all</string>
+
+
+</resources>
