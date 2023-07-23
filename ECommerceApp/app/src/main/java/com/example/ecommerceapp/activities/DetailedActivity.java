@@ -1,18 +1,31 @@
 //Làm giỏ hàng
 package com.example.ecommerceapp.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
 import com.example.ecommerceapp.models.NewProductsModel;
 import com.example.ecommerceapp.models.PopularProductsModel;
+import com.example.ecommerceapp.models.ShowAllModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class DetailedActivity extends AppCompatActivity {
 
@@ -27,8 +40,13 @@ public class DetailedActivity extends AppCompatActivity {
     //Popular Product with Recyclerview
     PopularProductsModel popularProductsModel = null;
 
+    //Show All Product when click product in product see all
+    ShowAllModel showAllModel = null;
+
+    FirebaseAuth auth;
     FirebaseFirestore firestore;
 
+    @SuppressWarnings("Convert2Lambda")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +56,7 @@ public class DetailedActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
         firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         //Base on NewProductsAdapter.java trong onBindViewHolder
         final Object obj = getIntent().getSerializableExtra("detailed");
@@ -47,6 +66,8 @@ public class DetailedActivity extends AppCompatActivity {
             newProductsModel = (NewProductsModel) obj;
         } else if (obj instanceof PopularProductsModel) {
             popularProductsModel = (PopularProductsModel) obj;
+        }else if (obj instanceof ShowAllModel) {
+            showAllModel = (ShowAllModel) obj;
         }
 
         detailedImg = findViewById(R.id.detailed_img);
@@ -83,6 +104,62 @@ public class DetailedActivity extends AppCompatActivity {
             name.setText(popularProductsModel.getName());
 
         }
+
+        //ShowAll Product with Recyclerview
+        if (showAllModel != null){
+            Glide.with(getApplicationContext()).load(showAllModel.getImg_url()).into(detailedImg);
+            name.setText(showAllModel.getName());
+            rating.setText(showAllModel.getRating());
+            description.setText(showAllModel.getDescription());
+            price.setText(String.valueOf(showAllModel.getPrice()));
+            name.setText(showAllModel.getName());
+        }
+
+        //Make function add to cart
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart();
+            }
+        });
+
+    }
+
+    //Function to add / remove product
+    @SuppressWarnings({"unused", "MismatchedQueryAndUpdateOfCollection", "UnusedAssignment", "RedundantSuppression", "Convert2Lambda"})
+    private void addToCart() {
+        String saveCurrentTime, saveCurrentDate;
+
+        Calendar calForDate = Calendar.getInstance();
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentDate = new SimpleDateFormat("MM dd, yyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTime = currentTime.format(calForDate.getTime());
+
+        final HashMap<String, Object> cartMap  = new HashMap<>();
+
+        cartMap.put("productName", name.getText().toString());
+        //noinspection OverwrittenKey
+        cartMap.put("productPrice", price.getText().toString());
+        //noinspection OverwrittenKey
+        cartMap.put("currentTime", saveCurrentTime);
+        cartMap.put("currentDate", saveCurrentDate);
+
+        //noinspection ConstantConditions
+        firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
+                .collection("User")
+                .add(cartMap)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        Toast.makeText(DetailedActivity.this, "Added To A Cart", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+
+
 
     }
 }

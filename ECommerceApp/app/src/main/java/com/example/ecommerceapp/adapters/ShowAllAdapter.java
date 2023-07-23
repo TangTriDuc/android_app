@@ -2,6 +2,7 @@ package com.example.ecommerceapp.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
+import com.example.ecommerceapp.activities.DetailedActivity;
 import com.example.ecommerceapp.models.ShowAllModel;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.show_all_item, parent, false));
     }
 
+    @SuppressWarnings("Convert2Lambda")
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -45,6 +48,17 @@ public class ShowAllAdapter extends RecyclerView.Adapter<ShowAllAdapter.ViewHold
 
         //RecycleView OnClickListener (see all)
         holder.mName.setText(list.get(position).getName());
+
+        //Xly khi bấm vào sp trong see all thì đưa tới cart
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int clickedPosition = holder.getAdapterPosition();
+                Intent intent = new Intent(context, DetailedActivity.class);
+                intent.putExtra("detailed",list.get(clickedPosition));
+                context.startActivity(intent);
+            }
+        });
 
 
     }
