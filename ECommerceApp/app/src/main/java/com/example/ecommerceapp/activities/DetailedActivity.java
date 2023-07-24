@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.ecommerceapp.R;
@@ -30,9 +31,16 @@ import java.util.HashMap;
 public class DetailedActivity extends AppCompatActivity {
 
     ImageView detailedImg;
-    TextView rating, name, description, price;
+    TextView rating, name, description, price, quantity;
     Button addToCart, buyNow;
     ImageView addItems, removeItems;
+
+    //Xly Toolbar
+    Toolbar toolbar;
+
+    //Function add or remove quantity(SL sp)
+    int totalQuantity = 1;
+    int totalPrice = 0;
 
     //New Products with Recyclerview
     NewProductsModel newProductsModel = null;
@@ -46,7 +54,7 @@ public class DetailedActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore firestore;
 
-    @SuppressWarnings("Convert2Lambda")
+    @SuppressWarnings({"Convert2Lambda", "ConstantConditions"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +63,20 @@ public class DetailedActivity extends AppCompatActivity {
 //        /*//hide status bar with color pink
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
+        //Xly Toolbar
+        toolbar = findViewById(R.id.detailed_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Xly back cho toolbar
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //Xly login + register + firestore
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
@@ -71,6 +93,7 @@ public class DetailedActivity extends AppCompatActivity {
         }
 
         detailedImg = findViewById(R.id.detailed_img);
+        quantity = findViewById(R.id.quantity);
         name = findViewById(R.id.detailed_name);
         rating = findViewById(R.id.rating);
         description = findViewById(R.id.detail_desc);
@@ -92,6 +115,9 @@ public class DetailedActivity extends AppCompatActivity {
             price.setText(String.valueOf(newProductsModel.getPrice()));
             name.setText(newProductsModel.getName());
 
+            //Function add or remove quantity(SL sp + price tăng theo )
+            totalPrice = newProductsModel.getPrice() * totalQuantity;
+
         }
 
         //Popular Product with Recyclerview
@@ -103,6 +129,9 @@ public class DetailedActivity extends AppCompatActivity {
             price.setText(String.valueOf(popularProductsModel.getPrice()));
             name.setText(popularProductsModel.getName());
 
+            //Function add or remove quantity(SL sp + price tăng theo )
+            totalPrice = popularProductsModel.getPrice() * totalQuantity;
+
         }
 
         //ShowAll Product with Recyclerview
@@ -113,6 +142,9 @@ public class DetailedActivity extends AppCompatActivity {
             description.setText(showAllModel.getDescription());
             price.setText(String.valueOf(showAllModel.getPrice()));
             name.setText(showAllModel.getName());
+
+            //Function add or remove quantity(SL sp + price tăng theo )
+            totalPrice = showAllModel.getPrice() * totalQuantity;
         }
 
         //Make function add to cart
@@ -120,6 +152,49 @@ public class DetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addToCart();
+            }
+        });
+
+        //Function add or remove quantity(SL sp)
+        addItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(totalQuantity < 10) {
+                    totalQuantity++;
+                    quantity.setText(String.valueOf(totalQuantity));
+                }
+
+
+                //Function add or remove quantity(SL sp + price tăng theo )
+                if (newProductsModel != null){
+                    totalPrice = newProductsModel.getPrice() * totalQuantity;
+                }
+
+                //Function add or remove quantity(SL sp + price tăng theo )
+                if (popularProductsModel != null){
+                    totalPrice = popularProductsModel.getPrice() * totalQuantity;
+                }
+
+                //Function add or remove quantity(SL sp + price tăng theo )
+                if (showAllModel != null){
+                    totalPrice = showAllModel.getPrice() * totalQuantity;
+                }
+
+
+
+            }
+        });
+
+        removeItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(totalQuantity > 1) {
+                    totalQuantity--;
+                    quantity.setText(String.valueOf(totalQuantity));
+                }
+
             }
         });
 
@@ -147,6 +222,12 @@ public class DetailedActivity extends AppCompatActivity {
         cartMap.put("currentTime", saveCurrentTime);
         cartMap.put("currentDate", saveCurrentDate);
 
+        //Function add or remove quantity(SL sp + price tăng theo )
+        cartMap.put("totalQuantity", quantity.getText().toString());
+        cartMap.put("totalPrice", totalPrice);
+
+
+        //XLy khi bấm vào giỏ hàng thì sẽ thêm sp vào firestore
         //noinspection ConstantConditions
         firestore.collection("AddToCart").document(auth.getCurrentUser().getUid())
                 .collection("User")

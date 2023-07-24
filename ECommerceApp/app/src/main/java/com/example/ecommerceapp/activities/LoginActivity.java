@@ -16,8 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, password;
@@ -28,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Ẩn action bar
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        /*//Ẩn action bar
+//        Objects.requireNonNull(getSupportActionBar()).hide();*/
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);

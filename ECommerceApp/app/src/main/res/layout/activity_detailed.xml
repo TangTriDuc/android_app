@@ -10,12 +10,24 @@
         android:id="@+id/detailed_img"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/ic_launcher_background"
         android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailed_toolbar"
+        tools:ignore="ContentDescription,ImageContrastCheck" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detailed_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#8ff7fd"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription,ImageContrastCheck" />
+        app:title="Product Detailed"/>
 
     <androidx.cardview.widget.CardView
         android:translationY="-50dp"

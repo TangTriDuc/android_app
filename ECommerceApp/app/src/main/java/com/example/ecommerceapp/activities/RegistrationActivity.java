@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ecommerceapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
 public class RegistrationActivity extends AppCompatActivity {
 
     EditText name, email, password;
@@ -27,8 +25,8 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        //Ẩn action bar
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        /*//Ẩn action bar
+//        Objects.requireNonNull(getSupportActionBar()).hide();*/
 
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);

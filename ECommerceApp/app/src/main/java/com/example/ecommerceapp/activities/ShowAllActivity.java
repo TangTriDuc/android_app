@@ -2,9 +2,11 @@ package com.example.ecommerceapp.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,9 @@ public class ShowAllActivity extends AppCompatActivity {
     ShowAllAdapter showAllAdapter;
     List<ShowAllModel> showAllModelList;
 
+    //Xly Toolbar
+    Toolbar toolbar;
+
     FirebaseFirestore firestore;
 
     @SuppressWarnings({"Convert2Lambda", "ConstantConditions"})
@@ -34,16 +39,28 @@ public class ShowAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_all);
 
+        //Xly Toolbar
+        toolbar = findViewById(R.id.show_all_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //Xly back cho toolbar
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         //Xly see all cho category
         String type = getIntent().getStringExtra("type");
 
+        firestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.show_all_rec);
         //xly hiện 2 ảnh trong 1 slide
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         showAllModelList = new ArrayList<>();
         showAllAdapter = new ShowAllAdapter(this, showAllModelList);
         recyclerView.setAdapter(showAllAdapter);
-        firestore = FirebaseFirestore.getInstance();
 
 //           /* //Lấy từ huong dan trong tools Firebase Cloud Firestore
 //            //Read data from Firebase Cloud with ShowAll Products
@@ -65,8 +82,7 @@ public class ShowAllActivity extends AppCompatActivity {
 //                        }
 //                    });*/
             //Xly see all cho category
-            if (type == null && type.isEmpty()) {
-
+            if (type == null || type.isEmpty()) {
                 //Lấy từ huong dan trong tools Firebase Cloud Firestore
                 //Read data from Firebase Cloud with ShowAll Products for category
                 firestore.collection("ShowAll")
