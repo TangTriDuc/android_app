@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
             auth.signOut();
             startActivity(new Intent(MainActivity.this, RegistrationActivity.class ));
+            Toast.makeText(this, "Logout Successful ", Toast.LENGTH_SHORT).show();
             finish();
 
         } else if (id == R.id.menu_my_cart) {

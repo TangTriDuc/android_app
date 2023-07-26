@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#8ff7fd"
+        android:theme="?attr/actionBarTheme"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="My Cart"/>
+        app:title="All Items"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/show_all_rec"
