@@ -63,12 +63,13 @@
 
     <EditText
         android:id="@+id/password"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:padding="15dp"
         android:layout_marginTop="10dp"
+        android:drawableEnd="@drawable/baseline_visibility_off_24"
         android:background="@drawable/edit_text_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
