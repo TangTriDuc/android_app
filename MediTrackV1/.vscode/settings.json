@@ -1,0 +1,25 @@
+{
+  "cSpell.words": ["cssbt", "firestore", "viền"],
+  "cSpell.enabled": false,
+  "json.schemaDownload.enable": false,
+
+  "java.import.gradle.enabled": false,
+  "java.import.maven.enabled": false,
+
+  "java.project.excludedPaths": [
+    "node_modules/**",
+    "**/node_modules/**",
+    ".gradle/**",
+    "android/.gradle/**"
+  ],
+
+  "java.import.exclusions": [
+    "**/node_modules/**",
+    "**/.gradle/**",
+    "**/android/.gradle/**"
+  ],
+
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "java.project.importOnFirstTimeStartup": "disabled",
+  "java.configuration.updateBuildConfiguration": "disabled"
+}

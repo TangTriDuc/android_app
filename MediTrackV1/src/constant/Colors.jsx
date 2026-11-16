@@ -1,0 +1,18 @@
+export default {
+  PRIMARY: '#007DFC',
+  LIGHT_PRIMARY: '#66CCFF',
+  GRAY: '#C0C0C0',
+  DARK_GRAY: '#8f8f8f',
+  LIGHT_GRAY_BORDER: '#E5E7EB',
+  GREEN: '#0da624',
+  GREEN1: '#0F3040',
+  WHITE: '#FFFFFF',
+  Blue1: '#3368A0',
+  Orange: '#FF9100',
+  Orange1: '#E98B50',
+  Red: '#D32F2F',
+  Light_Red: '#FFB3B3',
+  Blush_White: '#FFF1F1',
+  Off_black: '#222',
+  Semi_transparent_Black: 'rgba(0,0,0,0.6)',
+};
