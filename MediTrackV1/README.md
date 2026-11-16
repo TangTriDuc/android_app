@@ -1,3 +1,5 @@
+****Note: This repository was copied from my external hard drive. I have removed a few folders from the original project, so the code is not fully complete compared to the demo video.” ****
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
